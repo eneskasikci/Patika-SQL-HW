@@ -1,25 +1,29 @@
 -- 1
---film tablosunda bulunan ve film ismi (title) 'n' 
---karakteri ile biten en uzun (length) 5 filmi sıralayınız.
+--film tablosunda bulunan filmleri rating değerlerine göre gruplayınız.
 
 SELECT * FROM film
 WHERE title ~~ '%n'
 LIMIT 5
 
 -- 2
---film tablosunda bulunan ve film ismi (title) 'n' 
---karakteri ile biten en kısa (length) ikinci(6,7,8,9,10) 5 filmi(6,7,8,9,10) sıralayınız.
+--film tablosunda bulunan filmleri replacement_cost sütununa göre grupladığımızda
+--film sayısı 50 den fazla olan replacement_cost değerini ve karşılık gelen film sayısını sıralayınız.
 
-SELECT * FROM film
-WHERE title ~~ '%n'
-OFFSET 5
-LIMIT 5
+SELECT replacement_cost, COUNT(*) FROM film
+GROUP BY replacement_cost
+HAVING COUNT(*) > 50;
 
 -- 3
---customer tablosunda bulunan last_name sütununa göre
---azalan yapılan sıralamada store_id 1 olmak koşuluyla ilk 4 veriyi sıralayınız.
+--customer tablosunda bulunan store_id değerlerine karşılık gelen müşteri sayılarını nelerdir?
 
-SELECT * FROM customer
-WHERE store_id = 1
-ORDER BY last_name DESC
-LIMIT 4;
+SELECT store_id, COUNT(*) Customer_Count FROM customer
+GROUP BY store_id;
+
+-- 4
+--city tablosunda bulunan şehir verilerini country_id sütununa göre gruplandırdıktan sonra
+--en fazla şehir sayısı barındıran country_id bilgisini ve şehir sayısını paylaşınız.
+
+SELECT country_id, COUNT (*) FROM city
+GROUP BY country_id
+ORDER BY COUNT(*) DESC
+LIMIT 1;
